@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
-import ThemeRegistry from "./components/Theme/ThemeRegistry";
+import { Roboto } from "next/font/google";
+import ThemeRegistry from "./components/theme/theme-registry";
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Darick's Trivia App",
@@ -17,6 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <style jsx global>{`
+        html {
+          font-family: ${roboto.style.fontFamily};
+        }
+      `}</style>
       <body>
         <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
       </body>
