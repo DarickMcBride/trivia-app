@@ -1,22 +1,31 @@
 import TriviaForm from "./components/ui/TriviaForm";
 import { Container } from "@mui/material";
+import { getQuestions } from "./lib/data";
 
-async function getQuestions() {
-  const res = await fetch("https://opentdb.com/api.php?amount=10");
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
+//shuffle array
+function shuffle(array: string[]) {
+  return array.sort(() => Math.random() - 0.5);
+}
 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error("Failed to fetch questions");
-  }
-
-  return res.json();
+//decode base64 string
+function atob(str: string) {
+  return Buffer.from(str, "base64").toString("binary");
 }
 
 export default async function Page() {
   const data = await getQuestions();
+  //const status = data.response_code;
+
   const questions = data.results;
+
+  const question: string = atob(
+    questions[0].question.replaceAll("&quot;", '"')
+  );
+  const answer: string = atob(questions[0].correct_answer);
+  const incorrectAnswers: string[] = questions[0].incorrect_answers.map(
+    (a: string) => atob(a)
+  );
+  const answers: string[] = shuffle([...incorrectAnswers, answer]);
 
   return (
     <Container
@@ -25,7 +34,7 @@ export default async function Page() {
         justifyContent: "center",
       }}
     >
-      <TriviaForm question={questions[0].question.replaceAll("&quot;", '"')} />
+      <TriviaForm question={question} answers={answers} />
     </Container>
   );
 }

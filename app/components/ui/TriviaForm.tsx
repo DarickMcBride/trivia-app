@@ -6,9 +6,10 @@ import { SubmitButton } from "./SubmitButton";
 
 interface TriviaFormProps {
   question: string;
+  answers: string[];
 }
 
-const TriviaForm: React.FC<TriviaFormProps> = ({ question }) => {
+const TriviaForm: React.FC<TriviaFormProps> = ({ question, answers }) => {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // handle form submission logic here
@@ -28,7 +29,7 @@ const TriviaForm: React.FC<TriviaFormProps> = ({ question }) => {
       <Typography variant="h4" sx={{ mb: 2 }}>
         <Suspense fallback={<p>Loading question...</p>}>{question}</Suspense>
       </Typography>
-      <AnswerSelect />
+      <AnswerSelect answers={answers} />
       <SubmitButton />
     </Box>
   );

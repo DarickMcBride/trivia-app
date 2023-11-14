@@ -5,7 +5,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 
-export default function ControlledRadioButtonsGroup() {
+interface AnswerSelectProps {
+  answers: string[];
+}
+
+export default function AnswerSelect({ answers }: AnswerSelectProps) {
   const [value, setValue] = React.useState("a");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,10 +26,26 @@ export default function ControlledRadioButtonsGroup() {
         value={value}
         onChange={handleChange}
       >
-        <FormControlLabel value="a" control={<Radio />} label="a" />
-        <FormControlLabel value="b" control={<Radio />} label="b" />
-        <FormControlLabel value="c" control={<Radio />} label="c" />
-        <FormControlLabel value="d" control={<Radio />} label="d" />
+        <FormControlLabel
+          value={answers[0]}
+          control={<Radio />}
+          label={`A: ${answers[0]}`}
+        />
+        <FormControlLabel
+          value={answers[1]}
+          control={<Radio />}
+          label={`B: ${answers[1]}`}
+        />
+        <FormControlLabel
+          value={answers[2]}
+          control={<Radio />}
+          label={`C: ${answers[2]}`}
+        />
+        <FormControlLabel
+          value={answers[4]}
+          control={<Radio />}
+          label={`D: ${answers[3]}`}
+        />
       </RadioGroup>
     </FormControl>
   );
