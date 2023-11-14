@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import ThemeRegistry from "./components/theme/ThemeRegistry";
-import AppBar from "@/app/components/ui/app-bar";
+import AppBar from "@/app/components/ui/AppBar";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],

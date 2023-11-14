@@ -1,5 +1,5 @@
 
-import TriviaForm from "./components/ui/tivia-form";
+import TriviaForm from "./components/ui/TriviaForm";
 
 const Page = () => {
   return (
