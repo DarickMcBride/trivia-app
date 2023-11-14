@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import ThemeRegistry from "./components/theme/theme-registry";
+import ThemeRegistry from "./components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/app-bar";
 
 const roboto = Roboto({
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={roboto.className}>
-        <ThemeRegistry options={{ key: "mui" }}>
+        <ThemeRegistry>
           <AppBar>{children}</AppBar>
         </ThemeRegistry>
       </body>
