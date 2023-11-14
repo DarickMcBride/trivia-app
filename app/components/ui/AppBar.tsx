@@ -1,13 +1,7 @@
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Toolbar,
-  Button,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Toolbar, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import QuizIcon from "@mui/icons-material/Quiz";
+import IconButton from "@mui/material/IconButton";
 
 const navItems = [
   { text: "Home", href: "/" },
@@ -19,16 +13,24 @@ const MyAppBar = (props: { children: any }) => {
 
   return (
     <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-
       <AppBar component="nav">
         <Toolbar>
-          <Link href="/">
-            <QuizIcon sx={{ mr: 2 }} />
-          </Link>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Trivia Time
-          </Typography>
+          <Box sx={{ flexGrow: 1 }}>
+            <Link href="/" passHref>
+              <IconButton>
+                <QuizIcon />
+              </IconButton>
+            </Link>
+          </Box>
+          <Box sx={{ flexGrow: 1 }}>
+            <Button
+              component={Link}
+              href={"/"}
+              sx={{ color: "white", fontSize: 25 }}
+            >
+              Trivia Time
+            </Button>
+          </Box>
 
           <Box
             sx={{
@@ -43,7 +45,7 @@ const MyAppBar = (props: { children: any }) => {
         </Toolbar>
       </AppBar>
 
-      <Box component="main" sx={{ mt: 10 }}>
+      <Box component="main" sx={{ mt: 10, width: "100%" }}>
         {children}
       </Box>
     </Box>

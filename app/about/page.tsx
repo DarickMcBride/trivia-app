@@ -1,8 +1,8 @@
-import React from "react";
+import Box from "@mui/material/Box";
 
 const AboutPage = () => {
   return (
-    <div>
+    <Box sx={{ ml: 5 }}>
       <h1>About Me</h1>
       <p>
         Welcome to my trivia app! I am a passionate developers who love creating
@@ -16,7 +16,7 @@ const AboutPage = () => {
       <br />
       <p>Thank you,</p>
       <p>Darick McBride</p>
-    </div>
+    </Box>
   );
 };
 
