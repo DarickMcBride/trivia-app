@@ -1,6 +1,6 @@
 // app/ThemeRegistry.tsx
 "use client";
-import React from "react";
+import { useState } from "react";
 import createCache from "@emotion/cache";
 import { useServerInsertedHTML } from "next/navigation";
 import { CacheProvider } from "@emotion/react";
@@ -8,10 +8,12 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./theme";
 
-export default function ThemeRegistry(props: { options: any; children: any }) {
+// This implementation is from emotion-js
+// https://github.com/emotion-js/emotion/issues/2928#issuecomment-1319747902
+export function ThemeRegistry(props) {
   const { options, children } = props;
 
-  const [{ cache, flush }] = React.useState(() => {
+  const [{ cache, flush }] = useState(() => {
     const cache = createCache(options);
     cache.compat = true;
     const prevInsert = cache.insert;
@@ -58,5 +60,17 @@ export default function ThemeRegistry(props: { options: any; children: any }) {
         {children}
       </ThemeProvider>
     </CacheProvider>
+  );
+}
+
+// app/layout.js
+export default function RootLayout(props) {
+  const { children } = props;
+  return (
+    <html lang="en">
+      <body>
+        <ThemeRegistry options={{ key: "mui" }}>{children}</ThemeRegistry>
+      </body>
+    </html>
   );
 }

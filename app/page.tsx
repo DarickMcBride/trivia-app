@@ -1,10 +1,12 @@
 
+import TriviaForm from "./components/ui/tivia-form";
 
-export default function Home() {
+const Page = () => {
   return (
-    <div>
-      <h1>My Trivia App</h1>
-      
-    </div>
-  )
-}
+    <>
+      <TriviaForm />
+    </>
+  );
+};
+
+export default Page;
