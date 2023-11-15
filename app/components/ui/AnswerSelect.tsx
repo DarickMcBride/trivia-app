@@ -1,17 +1,19 @@
-import * as React from "react";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+"use client";
+import React from "react";
+import {
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 
 interface AnswerSelectProps {
   answers: string[];
 }
 
 export default function AnswerSelect({ answers }: AnswerSelectProps) {
-  const [value, setValue] = React.useState("a");
-
+  const [value, setValue] = React.useState(answers[0]);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
@@ -42,7 +44,7 @@ export default function AnswerSelect({ answers }: AnswerSelectProps) {
           label={`C: ${answers[2]}`}
         />
         <FormControlLabel
-          value={answers[4]}
+          value={answers[3]}
           control={<Radio />}
           label={`D: ${answers[3]}`}
         />

@@ -1,20 +1,18 @@
-"use client";
-
 import { useFormStatus } from "react-dom";
 import { Button } from "@mui/material";
 
-export function SubmitButton({ onClick }: { onClick: () => void }) {
+export function NextButton({ onClick }: { onClick: () => void }) {
   const { pending } = useFormStatus();
 
   return (
     <Button
       variant="contained"
       sx={{ mt: 2 }}
-      type="submit"
+      type="reset"
       aria-disabled={pending}
       onClick={onClick}
     >
-      Submit
+      Next Question
     </Button>
   );
 }
