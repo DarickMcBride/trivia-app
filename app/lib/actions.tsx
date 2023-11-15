@@ -18,14 +18,10 @@ export async function submitAnswer(
   //get answer-select value
   const answer = formData.get("answer-select");
 
-  console.log(answer);
-
   //check if answer is correct
   if (answer === correctAnswer) {
-    console.log("Correct!");
-    return "Correct!";
+    return { message: "Correct!", submitted: true };
   } else {
-    console.log("Incorrect!");
-    return "Incorrect!";
+    return { message: "Correct!", submitted: true };
   }
 }
