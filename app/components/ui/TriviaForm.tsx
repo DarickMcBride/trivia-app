@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import { Suspense } from "react";
 import { Typography, Box } from "@mui/material";
 import AnswerSelect from "./AnswerSelect";
@@ -13,6 +13,8 @@ type Question = {
   question: string;
   answers: string[];
 };
+
+const QuestionsContext = createContext<Question[]>([]);
 
 interface TriviaFormProps {
   questionList: Question[];
@@ -38,34 +40,36 @@ const TriviaForm = ({ questionList }: TriviaFormProps) => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        mt: 4,
-      }}
-    >
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        <Suspense fallback={<p>Loading question...</p>}>
-          {questions[0].question}
-        </Suspense>
-      </Typography>
+    <QuestionsContext.Provider value={questions}>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          mt: 4,
         }}
-        component="form"
-        action={formAction}
       >
-        <AnswerSelect answers={questions[0].answers} />
-        <Typography variant="h6">{message}</Typography>
-        {!submitted && <SubmitButton onClick={handleSubmit} />}
-        {submitted && <NextButton onClick={handleNextQuestion} />}
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          <Suspense fallback={<p>Loading question...</p>}>
+            {questions[0].question}
+          </Suspense>
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          component="form"
+          action={formAction}
+        >
+          <AnswerSelect answers={questions[0].answers} />
+          <Typography variant="h6">{message}</Typography>
+          {!submitted && <SubmitButton onClick={handleSubmit} />}
+          {submitted && <NextButton onClick={handleNextQuestion} />}
+        </Box>
       </Box>
-    </Box>
+    </QuestionsContext.Provider>
   );
 };
 
