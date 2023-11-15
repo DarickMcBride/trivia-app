@@ -20,8 +20,8 @@ export async function submitAnswer(
 
   //check if answer is correct
   if (answer === correctAnswer) {
-    return { message: "Correct!", submitted: true };
+    return { message: "Correct!" };
   } else {
-    return { message: "Correct!", submitted: true };
+    return { message: "Incorrect!" };
   }
 }

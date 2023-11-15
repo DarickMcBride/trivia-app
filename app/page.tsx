@@ -41,8 +41,6 @@ export default async function Page() {
     }
   );
 
-
-
   return (
     <Container
       sx={{
@@ -50,7 +48,7 @@ export default async function Page() {
         justifyContent: "center",
       }}
     >
-      <TriviaForm questionList={questions} />
+      <TriviaForm data={questions} />
     </Container>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import ThemeRegistry from "./components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/AppBar";
+import DataProvider from "./lib/providers";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -22,7 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <ThemeRegistry>
-          <AppBar>{children}</AppBar>
+          <DataProvider>
+            <AppBar>{children}</AppBar>
+          </DataProvider>
         </ThemeRegistry>
       </body>
     </html>

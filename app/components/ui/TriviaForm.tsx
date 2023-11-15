@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, createContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Suspense } from "react";
 import { Typography, Box } from "@mui/material";
 import AnswerSelect from "./AnswerSelect";
@@ -7,6 +7,7 @@ import { SubmitButton } from "./SubmitButton";
 import { NextButton } from "./NextButton";
 import { submitAnswer } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
+import { DataContext } from "@/app/lib/providers";
 
 type Question = {
   id: number;
@@ -14,35 +15,29 @@ type Question = {
   answers: string[];
 };
 
-const QuestionsContext = createContext<Question[]>([]);
-
 interface TriviaFormProps {
-  questionList: Question[];
+  data: Question[];
 }
 
-const TriviaForm = ({ questionList }: TriviaFormProps) => {
-  const [questions, setQuestions] = useState([] as Question[]);
+const TriviaForm = ({ data }: TriviaFormProps) => {
   const [submitted, setSubmitted] = useState(false);
+  const [questions, setQuestions] = useContext(DataContext);
 
+  //store questions in context
   useEffect(() => {
-    const cachedQuestions = localStorage.getItem("questions");
-    console.log("questionList", questionList);
-    console.log("cashed questions", cachedQuestions);
-    if (cachedQuestions?.length && cachedQuestions.length > 0) {
-      console.log(cachedQuestions.length);
-      setQuestions(JSON.parse(cachedQuestions));
-    } else {
-      console.log("inital questions");
-      setQuestions(questionList);
+    if (data.length > 0) {
+      setQuestions(data);
     }
-  }, [questionList]);
-
-  useEffect(() => {
-    localStorage.setItem("questions", JSON.stringify(questions));
-  }, [questions]);
+  }, [data, setQuestions]);
 
   const updateQuestionList = submitAnswer.bind(null, questions[0]?.id);
   const [state, formAction] = useFormState(updateQuestionList, null);
+
+  useEffect(() => {
+    if (state?.message) {
+      setSubmitted(true);
+    }
+  }, [state?.message]);
 
   //handle next question button
   const handleNextQuestion = () => {
@@ -51,10 +46,11 @@ const TriviaForm = ({ questionList }: TriviaFormProps) => {
     setQuestions(newQuestions);
     setSubmitted(false);
   };
-  console.log("questions", questions);
+
+  console.log("num of questions", questions.length);
 
   return (
-    <QuestionsContext.Provider value={questions}>
+    <Suspense fallback={<p>Loading question...</p>}>
       <Box
         sx={{
           display: "flex",
@@ -63,33 +59,25 @@ const TriviaForm = ({ questionList }: TriviaFormProps) => {
           mt: 4,
         }}
       >
-        {questions.length > 0 && (
-        <>
-          <Typography variant="h4" sx={{ mb: 2 }}>
-              <Suspense fallback={<p>Loading question...</p>}>
-                {questions[0].question}
-              </Suspense>
-            </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-              component="form"
-              action={formAction}
-            >
-              <Suspense fallback={<p>Loading answers...</p>}>
-              <AnswerSelect answers={questions[0].answers} />
-              </Suspense>
-            <Typography variant="h6">{state?.message}</Typography>
-              {!state?.submitted && <SubmitButton />}
-              {state?.submitted && <NextButton onClick={handleNextQuestion} />}
-            </Box>
-          </>
-      )}
-    </Box>
-    </QuestionsContext.Provider>
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          {questions[0] && questions[0].question}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          component="form"
+          action={formAction}
+        >
+          {questions[0] && <AnswerSelect answers={questions[0].answers} />}
+          <Typography variant="h6">{state?.message}</Typography>
+          {!submitted && <SubmitButton />}
+          {submitted && <NextButton onClick={handleNextQuestion} />}
+        </Box>
+      </Box>
+    </Suspense>
   );
 };
 
