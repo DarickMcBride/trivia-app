@@ -29,8 +29,6 @@ const TriviaForm = () => {
     setSubmitted(false);
   };
 
-  console.log("# Qs", questions.length);
-
   return (
     <Suspense fallback={<p>Loading question...</p>}>
       <Box

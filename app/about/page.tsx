@@ -22,8 +22,11 @@ const AboutPage = () => {
         <li>Custom theming</li>
         <li>Dark and light mode</li>
         <li>Settings</li>
-        <li>Ability to choose question difficulty and category</li>
+        <li>Ability to choose questions difficulty and category</li>
         <li>Feedback submission</li>
+        <li>Ability to do more than 50 questions</li>
+        <li>Keep track of questions already asked by user</li>
+        <li>Score keeping</li>
       </ul>
       <p>
         <strong>Disclaimer:</strong> This is a pre-release version. Some
