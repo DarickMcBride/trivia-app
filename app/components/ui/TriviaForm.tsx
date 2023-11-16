@@ -30,7 +30,7 @@ const TriviaForm = () => {
     setSubmitted(false);
   };
 
-  console.log("num of questions", questions.length);
+  console.log("# Qs", questions.length);
 
   return (
     <Suspense fallback={<p>Loading question...</p>}>
