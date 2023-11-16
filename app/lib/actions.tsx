@@ -18,6 +18,8 @@ export async function submitAnswer(
   //get answer-select value
   const answer = formData.get("answer-select");
 
+  console.log("action ran");
+
   //check if answer is correct
   if (answer === correctAnswer) {
     return { message: "Correct!" };

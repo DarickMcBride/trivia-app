@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useOptimistic, useState } from "react";
 import { Suspense } from "react";
 import { Typography, Box } from "@mui/material";
 import AnswerSelect from "./AnswerSelect";
@@ -16,11 +16,10 @@ const TriviaForm = () => {
   const updateQuestionList = submitAnswer.bind(null, questions[0]?.id);
   const [state, formAction] = useFormState(updateQuestionList, null);
 
-  useEffect(() => {
-    if (state?.message) {
-      setSubmitted(true);
-    }
-  }, [state?.message]);
+  const handleSubmit = async (formData: FormData) => {
+    formAction(formData);
+    setSubmitted(true);
+  };
 
   //handle next question button
   const handleNextQuestion = () => {
@@ -52,12 +51,20 @@ const TriviaForm = () => {
             alignItems: "center",
           }}
           component="form"
-          action={formAction}
+          action={handleSubmit}
         >
-          {questions[0] && <AnswerSelect answers={questions[0].answers} />}
-          <Typography variant="h6">{state?.message}</Typography>
-          {!submitted && <SubmitButton />}
-          {submitted && <NextButton onClick={handleNextQuestion} />}
+          {!submitted && (
+            <>
+              {questions[0] && <AnswerSelect answers={questions[0].answers} />}
+              <SubmitButton />
+            </>
+          )}
+          {submitted && (
+            <>
+              <Typography variant="h6">{state?.message}</Typography>
+              <NextButton onClick={handleNextQuestion} />
+            </>
+          )}
         </Box>
       </Box>
     </Suspense>

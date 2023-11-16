@@ -16,6 +16,19 @@ const AboutPage = () => {
       <br />
       <p>Thank you,</p>
       <p>Darick McBride</p>
+
+      <h2>Planned Features</h2>
+      <ul>
+        <li>Custom theming</li>
+        <li>Dark and light mode</li>
+        <li>Settings</li>
+        <li>Ability to choose question difficulty and category</li>
+        <li>Feedback submission</li>
+      </ul>
+      <p>
+        <strong>Disclaimer:</strong> This is a pre-release version. Some
+        features may not work as expected.
+      </p>
     </Box>
   );
 };
