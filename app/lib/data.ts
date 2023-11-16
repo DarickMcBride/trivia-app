@@ -5,7 +5,7 @@ export async function getQuestions() {
   );
 
   if (!res.ok) {
-    throw new Error("res");
+    throw new Error("Failed to fetch questions");
   }
 
   return res.json();
