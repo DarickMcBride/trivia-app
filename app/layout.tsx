@@ -6,6 +6,7 @@ import AppBar from "@/app/components/ui/AppBar";
 import DataProvider from "@/app/providers";
 import DataFetch from "@/app/components/DataFetch";
 import { getQuestions } from "@/app/lib/data";
+import { Analytics } from "@vercel/analytics/react";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -75,6 +76,7 @@ export default async function RootLayout({
             </DataFetch>
           </DataProvider>
         </ThemeRegistry>
+        <Analytics />
       </body>
     </html>
   );
