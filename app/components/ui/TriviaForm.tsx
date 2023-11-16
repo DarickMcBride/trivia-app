@@ -3,8 +3,7 @@ import React, { useContext, useOptimistic, useState } from "react";
 import { Suspense } from "react";
 import { Typography, Box } from "@mui/material";
 import AnswerSelect from "./AnswerSelect";
-import { SubmitButton } from "./SubmitButton";
-import { NextButton } from "./NextButton";
+import { FormButton } from "./FormButton";
 import { submitAnswer } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 import { DataContext } from "@/app/providers";
@@ -30,42 +29,44 @@ const TriviaForm = () => {
   };
 
   return (
-    <Suspense fallback={<p>Loading question...</p>}>
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        mt: 4,
+      }}
+    >
+      <Typography variant="h4" sx={{ mb: 2 }}>
+        <Suspense fallback={<p>Loading question...</p>}>
+          {questions[0] && questions[0].question}
+        </Suspense>
+      </Typography>
       <Box
         sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          mt: 4,
         }}
+        component="form"
+        action={handleSubmit}
       >
-        <Typography variant="h4" sx={{ mb: 2 }}>
-          {questions[0] && questions[0].question}
-        </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-          component="form"
-          action={handleSubmit}
-        >
-          {!submitted && (
-            <>
+        {!submitted && (
+          <>
+            <Suspense fallback={<p>Loading answers...</p>}>
               {questions[0] && <AnswerSelect answers={questions[0].answers} />}
-              <SubmitButton />
-            </>
-          )}
-          {submitted && (
-            <>
-              <Typography variant="h6">{state?.message}</Typography>
-              <NextButton onClick={handleNextQuestion} />
-            </>
-          )}
-        </Box>
+            </Suspense>
+            <FormButton text={"Submit"} />
+          </>
+        )}
+        {submitted && (
+          <>
+            <Typography variant="h6">{state?.message}</Typography>
+            <FormButton text={"Next Question"} onClick={handleNextQuestion} />
+          </>
+        )}
       </Box>
-    </Suspense>
+    </Box>
   );
 };
 
