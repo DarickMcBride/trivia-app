@@ -7,7 +7,7 @@ import { SubmitButton } from "./SubmitButton";
 import { NextButton } from "./NextButton";
 import { submitAnswer } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
-import { DataContext } from "@/app/lib/providers";
+import { DataContext } from "@/app/providers";
 
 const TriviaForm = () => {
   const [submitted, setSubmitted] = useState(false);

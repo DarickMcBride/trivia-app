@@ -1,6 +1,6 @@
 "use client";
 import React, { ReactNode, useContext, useEffect } from "react";
-import { DataContext } from "../lib/providers";
+import { DataContext } from "../providers";
 
 type Props = {
   children: ReactNode;

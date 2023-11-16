@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/app/components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/AppBar";
-import DataProvider from "@/app/lib/providers";
+import DataProvider from "@/app/providers";
 import DataFetch from "@/app/components/DataFetch";
 import { getQuestions } from "@/app/lib/data";
 
