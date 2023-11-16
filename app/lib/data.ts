@@ -9,6 +9,7 @@ export async function getQuestions() {
   );
 
   if (!res.ok) {
+    console.error(res.statusText);
     throw new Error("Failed to fetch questions");
   }
 
