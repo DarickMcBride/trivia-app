@@ -7,7 +7,7 @@ type Props = {
   data: any[];
 };
 
-const App: React.FC<Props> = ({ children, data }) => {
+const Main: React.FC<Props> = ({ children, data }) => {
   const [_, setQuestions] = useContext(DataContext);
 
   //store questions in context
@@ -19,4 +19,4 @@ const App: React.FC<Props> = ({ children, data }) => {
   return <>{children}</>;
 };
 
-export default App;
+export default Main;

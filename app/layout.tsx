@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/app/components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/AppBar";
 import DataProvider from "@/app/lib/providers";
-import App from "@/app/lib/main";
+import Main from "@/app/lib/main";
 import { getQuestions } from "@/app/lib/data";
 
 const roboto = Roboto({
@@ -65,14 +65,14 @@ export default async function RootLayout({
       <body className={roboto.className}>
         <ThemeRegistry>
           <DataProvider>
-            <App data={questions}>
+            <Main data={questions}>
               <Box sx={{ display: "flex" }}>
                 <AppBar />
                 <Box component="main" sx={{ mt: 10, width: "100%" }}>
                   {children}
                 </Box>
               </Box>
-            </App>
+            </Main>
           </DataProvider>
         </ThemeRegistry>
       </body>
