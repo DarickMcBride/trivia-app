@@ -1,13 +1,13 @@
 "use client";
 import React, { ReactNode, useContext, useEffect } from "react";
-import { DataContext } from "./providers";
+import { DataContext } from "../lib/providers";
 
 type Props = {
   children: ReactNode;
   data: any[];
 };
 
-const Main: React.FC<Props> = ({ children, data }) => {
+const DataFetch: React.FC<Props> = ({ children, data }) => {
   const [_, setQuestions] = useContext(DataContext);
 
   //store questions in context
@@ -19,4 +19,4 @@ const Main: React.FC<Props> = ({ children, data }) => {
   return <>{children}</>;
 };
 
-export default Main;
+export default DataFetch;
