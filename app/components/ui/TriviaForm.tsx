@@ -9,26 +9,9 @@ import { submitAnswer } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 import { DataContext } from "@/app/lib/providers";
 
-type Question = {
-  id: number;
-  question: string;
-  answers: string[];
-};
-
-interface TriviaFormProps {
-  data: Question[];
-}
-
-const TriviaForm = ({ data }: TriviaFormProps) => {
+const TriviaForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useContext(DataContext);
-
-  //store questions in context
-  useEffect(() => {
-    if (data.length > 0) {
-      setQuestions(data);
-    }
-  }, [data, setQuestions]);
 
   const updateQuestionList = submitAnswer.bind(null, questions[0]?.id);
   const [state, formAction] = useFormState(updateQuestionList, null);
