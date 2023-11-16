@@ -29,7 +29,7 @@ const AboutPage = () => {
         <li>Score keeping</li>
       </ul>
       <p>
-        <strong>Disclaimer:</strong> This is a pre-release version. Some
+        <strong>Disclaimer:</strong> This is an early pre-release version. Some
         features may not work as expected.
       </p>
     </Box>

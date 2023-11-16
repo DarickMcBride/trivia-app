@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 import ThemeRegistry from "@/app/components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/AppBar";
 import DataProvider from "@/app/lib/providers";
-import App from "@/app/lib/app";
+import App from "@/app/lib/main";
 import { getQuestions } from "@/app/lib/data";
 
 const roboto = Roboto({
