@@ -1,3 +1,4 @@
+"use server";
 export async function getQuestions() {
   const res = await fetch(
     "https://opentdb.com/api.php?amount=50&type=multiple&encode=base64",
@@ -13,7 +14,7 @@ export async function getQuestions() {
     console.error("code:", res.status);
     console.error(res.statusText);
 
-    //throw new Error("Failed to fetch questions");
+    throw new Error("Failed to fetch questions");
   }
 
   return res.json();
