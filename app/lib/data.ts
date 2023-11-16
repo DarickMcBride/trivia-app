@@ -9,7 +9,9 @@ export async function getQuestions() {
   );
 
   if (!res.ok) {
+    console.error("code:", res.status);
     console.error(res.statusText);
+
     throw new Error("Failed to fetch questions");
   }
 
