@@ -8,7 +8,7 @@ export async function submitAnswer(
   formData: FormData
 ) {
   const res = await getQuestions();
-  console.log(res);
+
   const data = res.results;
 
   const question = data[questionID];

@@ -1,10 +1,5 @@
 This is a simple trivia application built to test your knowledge on various topics. The app provides a fun and interactive way to learn and challenge yourself.
 
-Features
-Multiple categories to choose from.
-Different difficulty levels.
-Leaderboard to track your progress and compete with others.
-
 Installation
 Clone the repository and install the dependencies:
 git clone https://github.com/user/trivia-app.git
