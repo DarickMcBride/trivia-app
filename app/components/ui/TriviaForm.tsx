@@ -16,8 +16,7 @@ const TriviaForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useContext(DataContext);
 
-  const submitAnswerAction = submitAnswer.bind(null, questions[0].id);
-  const [state, formAction] = useFormState(submitAnswerAction, initialState);
+  const [state, formAction] = useFormState(submitAnswer, initialState);
 
   //handle next question button
   const handleNextQuestion = () => {
@@ -50,6 +49,7 @@ const TriviaForm = () => {
         component="form"
         action={formAction}
       >
+        <input type="hidden" name="id" value={questions[0]?.id} />
         {!submitted && (
           <>
             <Suspense fallback={<p>Loading answers...</p>}>
