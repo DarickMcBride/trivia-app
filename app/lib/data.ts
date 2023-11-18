@@ -1,7 +1,8 @@
 "use server";
 import "server-only";
+import { cache } from "react";
 
-export async function getQuestions() {
+export const getQuestions = cache(async () => {
   const res = await fetch(
     "https://opentdb.com/api.php?amount=50&type=multiple",
     {
@@ -21,4 +22,4 @@ export async function getQuestions() {
   }
 
   return res.json();
-}
+});
