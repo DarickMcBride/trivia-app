@@ -23,11 +23,6 @@ function shuffle(array: string[]) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-//decode base64 string
-function atob(str: string) {
-  return Buffer.from(str, "base64").toString("binary");
-}
-
 export default async function RootLayout({
   children,
 }: {
@@ -46,10 +41,10 @@ export default async function RootLayout({
       },
       index: number
     ) => {
-      question.question = atob(question.question);
-      question.correct_answer = atob(question.correct_answer);
-      question.incorrect_answers = question.incorrect_answers.map((answer) =>
-        atob(answer)
+      question.question = question.question;
+      question.correct_answer = question.correct_answer;
+      question.incorrect_answers = question.incorrect_answers.map(
+        (answer) => answer
       );
 
       const answers = shuffle([

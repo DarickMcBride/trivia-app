@@ -7,6 +7,7 @@ import { FormButton } from "./FormButton";
 import { useFormState } from "react-dom";
 import { DataContext } from "@/app/providers";
 import { submitAnswer } from "@/app/lib/actions";
+import { startTransition } from "react";
 
 const initialState = {
   message: "",
@@ -17,6 +18,12 @@ const TriviaForm = () => {
   const [questions, setQuestions] = useContext(DataContext);
 
   const [state, formAction] = useFormState(submitAnswer, initialState);
+
+  const handleSubmit = (formData: any) => {
+    formAction(formData);
+
+    setSubmitted(true);
+  };
 
   //handle next question button
   const handleNextQuestion = () => {
@@ -35,11 +42,11 @@ const TriviaForm = () => {
         mt: 4,
       }}
     >
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        <Suspense fallback={<p>Loading question...</p>}>
+      <Suspense fallback={<p>Loading question...</p>}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
           {questions[0] && questions[0].question}
-        </Suspense>
-      </Typography>
+        </Typography>
+      </Suspense>
       <Box
         sx={{
           display: "flex",
@@ -47,13 +54,17 @@ const TriviaForm = () => {
           alignItems: "center",
         }}
         component="form"
-        action={formAction}
+        action={handleSubmit}
       >
-        <input type="hidden" name="id" value={questions[0]?.id} />
+        <input
+          type="hidden"
+          name="id"
+          value={questions[0]?.id !== undefined ? questions[0]?.id : -1}
+        />
         {!submitted && (
           <>
             <Suspense fallback={<p>Loading answers...</p>}>
-              {questions[0] && <AnswerSelect answers={questions[0].answers} />}
+              {questions[0] && <AnswerSelect answers={questions[0]?.answers} />}
             </Suspense>
             <FormButton text={"Submit"} />
           </>
