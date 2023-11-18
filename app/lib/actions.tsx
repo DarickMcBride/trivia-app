@@ -12,8 +12,8 @@ export async function submitAnswer(prevState: any, formData: FormData) {
 
     const question = data[id?.toString() || -1];
 
-    if(!question) {
-      return 
+    if (!question) {
+      return;
     }
 
     //const status = data.response_code;
@@ -25,8 +25,8 @@ export async function submitAnswer(prevState: any, formData: FormData) {
     } else {
       return { message: "Incorrect!" };
     }
-  } catch (e) {
-    console.error(e);
-    return { message: e };
+  } catch (error: any) {
+    console.error(error);
+    return { message: error.message };
   }
 }
