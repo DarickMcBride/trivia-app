@@ -15,7 +15,6 @@ const initialState = {
 const TriviaForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useContext(DataContext);
-  const [message, setMessage] = useState("");
 
   const submitAnswerAction = submitAnswer.bind(null, questions[0].id);
   const [state, formAction] = useFormState(submitAnswerAction, initialState);
@@ -61,7 +60,7 @@ const TriviaForm = () => {
         )}
         {submitted && (
           <>
-            <Typography variant="h6">{message}</Typography>
+            <Typography variant="h6">{state?.message}</Typography>
             <FormButton text={"Next Question"} onClick={handleNextQuestion} />
           </>
         )}
