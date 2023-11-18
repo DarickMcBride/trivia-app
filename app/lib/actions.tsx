@@ -4,7 +4,7 @@ import { getQuestions } from "@/app/lib/data";
 //submit answer
 export async function submitAnswer(
   questionID: number,
-  _currentState: any,
+  prevState: any,
   formData: FormData
 ) {
   const res = await getQuestions();

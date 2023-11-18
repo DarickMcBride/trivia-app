@@ -1,24 +1,24 @@
 "use client";
-import React, { useContext, useOptimistic, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Suspense } from "react";
 import { Typography, Box } from "@mui/material";
 import AnswerSelect from "./AnswerSelect";
 import { FormButton } from "./FormButton";
-import { submitAnswer } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 import { DataContext } from "@/app/providers";
+import { submitAnswer } from "@/app/lib/actions";
+
+const initialState = {
+  message: "",
+};
 
 const TriviaForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useContext(DataContext);
+  const [message, setMessage] = useState("");
 
-  const updateQuestionList = submitAnswer.bind(null, questions[0]?.id);
-  const [state, formAction] = useFormState(updateQuestionList, null);
-
-  const handleSubmit = async (formData: FormData) => {
-    formAction(formData);
-    setSubmitted(true);
-  };
+  const submitAnswerAction = submitAnswer.bind(null, questions[0].id);
+  const [state, formAction] = useFormState(submitAnswerAction, initialState);
 
   //handle next question button
   const handleNextQuestion = () => {
@@ -49,7 +49,7 @@ const TriviaForm = () => {
           alignItems: "center",
         }}
         component="form"
-        action={handleSubmit}
+        action={formAction}
       >
         {!submitted && (
           <>
@@ -61,7 +61,7 @@ const TriviaForm = () => {
         )}
         {submitted && (
           <>
-            <Typography variant="h6">{state?.message}</Typography>
+            <Typography variant="h6">{message}</Typography>
             <FormButton text={"Next Question"} onClick={handleNextQuestion} />
           </>
         )}
