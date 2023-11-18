@@ -5,11 +5,16 @@ import { getQuestions } from "@/app/lib/data";
 //submit answer
 export async function submitAnswer(prevState: any, formData: FormData) {
   try {
-    const res = await getQuestions();
-    const data = res.results;
-
-    const id = formData.get("id");
+    const id = formData.get("question-id");
     const answer = formData.get("answer-select");
+    const userID = formData.get("user-id");
+
+    if (!userID) {
+      throw new Error("User ID not found");
+    }
+
+    const res = await getQuestions(userID?.toString());
+    const data = res.results;
 
     const question = data[id?.toString() || -1];
 

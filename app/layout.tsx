@@ -5,8 +5,9 @@ import ThemeRegistry from "@/app/components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/AppBar";
 import DataProvider from "@/app/providers";
 import DataFetch from "@/app/components/DataFetch";
-import { getQuestions } from "@/app/lib/data";
+import { getQuestions, getToken, resetToken } from "@/app/lib/data";
 import { Analytics } from "@vercel/analytics/react";
+import { cookies } from "next/headers";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -23,14 +24,21 @@ function shuffle(array: string[]) {
   return array.sort(() => Math.random() - 0.5);
 }
 
-export default async function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const res = await getQuestions();
-  const data = res.results;
-  //const status = data.response_code;
+//get questions from api
+const getAPIQuestions = async (userID: string) => {
+  const res = await getQuestions(userID);
+  const resCode = res.status;
+  console.log("Response Code:", resCode);
+  let data = res.results;
+
+  //if token empty reset token and get new questions
+  if (resCode === 4) {
+    await resetToken(userID);
+    const res = await getQuestions(userID);
+    const resCode = res.status;
+    console.log("Response Code:", resCode);
+    data = res.results;
+  }
 
   const questions = data.map(
     (
@@ -55,6 +63,67 @@ export default async function RootLayout({
       return { id: index, question: question.question, answers: answers };
     }
   );
+  return questions;
+};
+
+// //get questions from database
+// const getDBQuestions = async (userID: string) => {
+//   const res = await fetch("/api/questions");
+
+//   const questions = data.map(
+//     (
+//       question: {
+//         question: string;
+//         correct_answer: string;
+//         incorrect_answers: string[];
+//       },
+//       index: number
+//     ) => {
+//       question.question = question.question;
+//       question.correct_answer = question.correct_answer;
+//       question.incorrect_answers = question.incorrect_answers.map(
+//         (answer) => answer
+//       );
+
+//       const answers = shuffle([
+//         ...question.incorrect_answers,
+//         question.correct_answer,
+//       ]);
+
+//       return { id: index, question: question.question, answers: answers };
+//     }
+//   );
+//   return questions;
+// };
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = cookies();
+  //set cookie to expire in 400 days
+  const expirationDate = new Date();
+  expirationDate.setDate(expirationDate.getDate() + 400);
+  const userID = cookieStore.get("user-id")?.toString();
+  let questions = [];
+
+  if (!userID) {
+    const res = await getToken();
+    const id = res.results.id;
+
+    cookieStore.set("user-id", id, {
+      expires: expirationDate,
+    });
+
+    questions = await getAPIQuestions(id);
+  } else {
+    cookieStore.set("user-id", userID, {
+      expires: expirationDate,
+    });
+
+    questions = await getAPIQuestions(userID);
+  }
 
   return (
     <html lang="en">
