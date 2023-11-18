@@ -27,6 +27,6 @@ export async function submitAnswer(prevState: any, formData: FormData) {
     }
   } catch (e) {
     console.error(e);
-    return { message: "Something went wrong!" };
+    return { message: e };
   }
 }
