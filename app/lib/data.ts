@@ -42,7 +42,8 @@ export const getToken = async () => {
 };
 
 //reset session token from opentdb
-export const resetToken = async (token: string) => {
+export const resetToken = async (token: string | null) => {
+  if (!token) return console.error("No token provided");
   const res = await fetch(
     `https://opentdb.com/api_token.php?command=reset&token=${token}`,
     {

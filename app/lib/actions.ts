@@ -1,6 +1,7 @@
 "use server";
 import "server-only";
-import { getQuestions } from "@/app/lib/data";
+import { cookies } from "next/headers";
+import { getQuestions, getToken, resetToken } from "@/app/lib/data";
 
 //submit answer
 export async function submitAnswer(prevState: any, formData: FormData) {
@@ -22,7 +23,8 @@ export async function submitAnswer(prevState: any, formData: FormData) {
       return;
     }
 
-    //const status = data.response_code;
+    console.log("Response Code:", res.response_code);
+
     const correctAnswer = question.correct_answer;
 
     //check if answer is correct

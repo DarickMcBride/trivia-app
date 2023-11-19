@@ -5,9 +5,8 @@ import ThemeRegistry from "@/app/components/theme/ThemeRegistry";
 import AppBar from "@/app/components/ui/AppBar";
 import DataProvider from "@/app/providers";
 import DataFetch from "@/app/components/DataFetch";
-import { getQuestions, getToken, resetToken } from "@/app/lib/data";
+import { getQuestions } from "@/app/lib/data";
 import { Analytics } from "@vercel/analytics/react";
-import { cookies } from "next/headers";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -33,7 +32,7 @@ const getAPIQuestions = async (userID: string) => {
 
   //if token empty reset token and get new questions
   if (resCode === 4) {
-    await resetToken(userID);
+    await fetch("http://localhost:3000/api/cookies", { method: "PUT" });
     const res = await getQuestions(userID);
     const resCode = res.status;
     console.log("Response Code:", resCode);
@@ -101,29 +100,12 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = cookies();
-  //set cookie to expire in 400 days
-  const expirationDate = new Date();
-  expirationDate.setDate(expirationDate.getDate() + 400);
-  const userID = cookieStore.get("user-id")?.toString();
-  let questions = [];
+  const res = await fetch("http://localhost:3000/api/cookies", {
+    method: "GET",
+  });
 
-  if (!userID) {
-    const res = await getToken();
-    const id = res.results.id;
-
-    cookieStore.set("user-id", id, {
-      expires: expirationDate,
-    });
-
-    questions = await getAPIQuestions(id);
-  } else {
-    cookieStore.set("user-id", userID, {
-      expires: expirationDate,
-    });
-
-    questions = await getAPIQuestions(userID);
-  }
+  //const questions = await getAPIQuestions(res);
+  const questions = [];
 
   return (
     <html lang="en">

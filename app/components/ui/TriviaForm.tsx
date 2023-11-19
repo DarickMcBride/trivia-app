@@ -7,7 +7,6 @@ import { FormButton } from "./FormButton";
 import { useFormState } from "react-dom";
 import { DataContext } from "@/app/providers";
 import { submitAnswer } from "@/app/lib/actions";
-import { cookies } from "next/headers";
 
 const initialState = {
   message: "",
@@ -16,8 +15,7 @@ const initialState = {
 const TriviaForm = () => {
   const [submitted, setSubmitted] = useState(false);
   const [questions, setQuestions] = useContext(DataContext);
-  const cookieStore = cookies();
-  const userID = cookieStore.get("user-id")?.toString();
+
   const [state, formAction] = useFormState(submitAnswer, initialState);
 
   const handleSubmit = (formData: any) => {
@@ -62,7 +60,7 @@ const TriviaForm = () => {
           name="question-id"
           value={questions[0]?.id !== undefined ? questions[0]?.id : -1}
         />{" "}
-        <input type="hidden" name="user-id" value={userID} />
+        {/* <input type="hidden" name="user-id" value={userID} /> */}
         {!submitted && (
           <>
             <Suspense fallback={<p>Loading answers...</p>}>
