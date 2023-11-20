@@ -1,7 +1,6 @@
 "use client";
 import React, { ReactNode, useMemo, useContext, useEffect } from "react";
 import { DataContext } from "../providers";
-import { get } from "http";
 
 type Props = {
   children: ReactNode;
@@ -54,8 +53,18 @@ const DataFetch = ({ children }: any) => {
   useEffect(() => {
     const getQuestions = async () => {
       console.log("fetching questions");
-      const questions = await fetchQuestions();
-      setQuestions(questions);
+      let data = [];
+      data = await fetchQuestions();
+      if (data.length === 0) {
+        //reset questions
+        console.log("resetting questions");
+        await fetch("http://localhost:3000/api/questions", {
+          method: "PUT",
+        });
+
+        data = await fetchQuestions();
+      }
+      setQuestions(data);
     };
 
     const setUserID = async () => {
@@ -63,11 +72,13 @@ const DataFetch = ({ children }: any) => {
         method: "GET",
       });
 
-      getQuestions();
+      if (questions.length === 0) {
+        getQuestions();
+      }
     };
 
     setUserID();
-  }, [setQuestions]);
+  }, [questions.length, setQuestions]);
 
   return <>{children}</>;
 };
