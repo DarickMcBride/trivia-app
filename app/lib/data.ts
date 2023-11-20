@@ -1,9 +1,8 @@
 "use server";
-import "server-only";
 
 export const getQuestions = async (token: string) => {
   const res = await fetch(
-    `https://opentdb.com/api.php?amount=50&type=multiple?token=${token}`,
+    `https://opentdb.com/api.php?amount=50&type=multiple&token=${token}`,
     {
       next: {
         tags: ["questions"],
@@ -12,7 +11,6 @@ export const getQuestions = async (token: string) => {
   );
 
   if (!res.ok) {
-    console.error(res);
     console.error("code:", res.status);
     console.error(res.statusText);
 
@@ -31,7 +29,6 @@ export const getToken = async () => {
   });
 
   if (!res.ok) {
-    console.error(res);
     console.error("code:", res.status);
     console.error(res.statusText);
 
@@ -54,7 +51,6 @@ export const resetToken = async (token: string | null) => {
   );
 
   if (!res.ok) {
-    console.error(res);
     console.error("code:", res.status);
     console.error(res.statusText);
 

@@ -1,44 +1,25 @@
-import { setCookie, getCookie } from "cookies-next";
-import { getToken, resetToken } from "@/app/lib/data";
-import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
+import { getToken } from "@/app/lib/data";
 
-export async function GET(req: NextRequest) {
-  const res = new NextResponse();
-  const token = getCookie("user-id", { res, req });
-  console.log("userID:", token);
-  return res;
-}
+export async function GET(request: Request) {
+  const cookieStore = cookies();
+  let userID = cookieStore.get("user-id");
 
-export async function POST(req: NextRequest) {
-  const res = new NextResponse();
-  let userID = getCookie("user-id");
   const expirationDate = new Date();
   expirationDate.setDate(expirationDate.getDate() + 400);
 
   //set cookie for 400 days
   if (!userID) {
     const res = await getToken();
-    console.log("token:", res.token);
 
-    const id = res.token.id;
-    userID = id;
-
-    setCookie("user-id", id, {
-      res,
-      req,
+    return new Response("New Cookie Set", {
+      status: 200,
+      headers: { "Set-Cookie": `user-id=${res.token}` },
     });
   } else {
-    setCookie("user-id", userID, {
-      res,
-      req,
+    return new Response("Cookie Reset", {
+      status: 200,
+      headers: { "Set-Cookie": `user-id=${userID.value}` },
     });
   }
-  return res.json();
-}
-
-export async function PATCH(req: NextRequest) {
-  const url = new URL(req.url);
-  const token = url.searchParams.get("user-id");
-  await resetToken(token);
-  return new NextResponse("reset");
 }

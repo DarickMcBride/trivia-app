@@ -23,8 +23,6 @@ export async function submitAnswer(prevState: any, formData: FormData) {
       return;
     }
 
-    console.log("Response Code:", res.response_code);
-
     const correctAnswer = question.correct_answer;
 
     //check if answer is correct
