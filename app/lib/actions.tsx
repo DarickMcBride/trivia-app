@@ -5,8 +5,7 @@ import { getQuestions } from "@/app/lib/data";
 //submit answer
 export async function submitAnswer(prevState: any, formData: FormData) {
   try {
-    const res = await getQuestions();
-    const data = res.results;
+
 
     const id = formData.get("id");
     const answer = formData.get("answer-select");
