@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { getQuestions, getToken, resetToken } from "@/app/lib/data";
 
 //submit answer
-export async function submitAnswer(prevState: any, formData: FormData) {
+export async function submitAnswer(prevState: string, formData: FormData) {
   try {
     const id = formData.get("question-id");
     const answer = formData.get("answer-select");

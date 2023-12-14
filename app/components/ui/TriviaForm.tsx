@@ -18,11 +18,6 @@ const TriviaForm = () => {
 
   const [state, formAction] = useFormState(submitAnswer, initialState);
 
-  const handleSubmit = (formData: any) => {
-    formAction(formData);
-
-    setSubmitted(true);
-  };
 
   //handle next question button
   const handleNextQuestion = () => {
@@ -53,7 +48,7 @@ const TriviaForm = () => {
           alignItems: "center",
         }}
         component="form"
-        action={handleSubmit}
+        action={formAction}
       >
         <input
           type="hidden"
